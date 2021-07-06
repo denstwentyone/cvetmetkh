@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header class="w3-container w3-black w3-row-padding">
+        <h1 class="w3-tag w3-third">CvetMetKh</h1>
+    </header>
+    <main class="w3-container">
+        <div class="w3-sidebar w3-grey w3-bar-block w3-container" style="width:12%;">
+            <table class="" style="width:100%" align="center">
+                <tr>
+                    <th>Metal</th>
+                    <th>Amount</th>
+                </tr>
+                {% for metal in allMetal %}
+                <tr>
+                    <td align="center"><p>{{ metal.name }}</p></td>
+                    <td align="center"><p>{{ metal.amount }}</p></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="w3-padding-large" align="center">
+            <h1>Orders to confirm</h1>
+            <form method="get">
+            {% csrf_token %}
+            <table class="w3-table w3-striped w3-border" style="width:35%" align="center">
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>E-mail</th>
+                    <th>Metal</th>
+                    <th>Amount</th>
+                </tr>
+                {% for order in result %}
+                <tr>
+                    
+                    <td><input type="radio" name="id" value={{ order.order_id }}></td>
+                    <td>{{ order.client_name }}</td>
+                    <td>{{ order.email }}</td>
+                    <td>{{ order.metal_name }}</td>
+                    <td>{{ order.count }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            <input type="submit" value="Confirm" name="Confirm">
+            <input type="submit" value="Reject" name="Reject">
+            </form>
+        </div>
+        <div class="w3-padding-large" align="center">
+            <h1>Make supply</h1>
+            <form class="w3-padding-large w3-border" style="width:23%" method="post">
+            {% csrf_token %}
+                <p>
+                <label>Metal</label>
+                <select class="w3-select" name="metal" id="metal" required>
+                    <option value="" disabled selected>Choose your option</option>
+                    <option value="1">Metal 1</option>
+                    <option value="2">Metal 2</option>
+                    <option value="3">Metal 3</option>
+                </select></p>
+                <p>
+                <label>Amount</label>
+                <input class="w3-input" type="number" name="amount" id="amount" required></p>
+                <p>
+                <input type="submit" value="Confirm"></p>
+            </form>
+        </div>
+    </main>
+</body>
+</html>
